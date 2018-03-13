@@ -69,6 +69,7 @@ function nicProfileGetRequest(){
         success: function(data, textStatus, xhr) {
             console.log("[GET NICPROFILES]Passed Status" + xhr.status);
             console.log("Nic Profiles data: "+ data)
+            // push the data on the table. ?? 
             $('.nic-result').text(data); 
         },
         error: function(data, textStatus, xhr) {
