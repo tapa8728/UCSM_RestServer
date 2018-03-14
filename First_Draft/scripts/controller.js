@@ -14,6 +14,7 @@ $(document).ready(function() {
     });
     $("#nicprof_button").click(function(e){
         e.preventDefault();
+        
         nicProfileGetRequest();
     });
     $("#domains_button").click(function(e){
@@ -56,6 +57,7 @@ function loginPostRequest(u_input, p_input) {
 } // end of loginPostRequest function. 
     
 function nicProfileGetRequest(){
+    console.log("Here 1");
     // make calls to Nic Profiles. 
     var nicprofiles = $.ajax({
         url: "http://localhost:4567/device3/nicprofiles", 
@@ -69,6 +71,7 @@ function nicProfileGetRequest(){
         success: function(data, textStatus, xhr) {
             console.log("[GET NICPROFILES]Passed Status" + xhr.status);
             console.log("Nic Profiles data: "+ data)
+            
             // push the data on the table. ?? 
             $('.nic-result').text(data); 
         },

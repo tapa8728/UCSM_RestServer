@@ -22,6 +22,34 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="../scripts/controller.js"></script>
+    <script>
+        function nicProfileGetRequest(){
+            console.log("Here 1");
+            // make calls to Nic Profiles. 
+            var nicprofiles = $.ajax({
+                url: "http://localhost:4567/device3/nicprofiles", 
+                type: 'GET', 
+                //contentType: 'application/json', 
+                crossDomain: true,
+                xhrFields : {
+                     withCredentials: true
+                },
+                headers :{},
+                success: function(data, textStatus, xhr) {
+                    console.log("[GET NICPROFILES]Passed Status" + xhr.status);
+                    console.log("Nic Profiles data: "+ data)
+
+                    // push the data on the table. ?? 
+                    $('.nic-result').text(data); 
+                },
+                error: function(data, textStatus, xhr) {
+                    console.log("[GET NICPROFILES]Failed Status" + xhr.status);
+                }
+            });
+        } // end of nicProfileGetRequest function. 
+    
+        nicProfileGetRequest()
+    </script>
 </head>
 
 <body>
