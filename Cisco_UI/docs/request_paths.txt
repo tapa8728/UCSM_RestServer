@@ -1,0 +1,112 @@
+ET Requests:
+
+GET /<device>/domains
+GET /<device>/nicprofiles
+GET /<device>/syncinformation
+GET /<device>/uplinkprofiles
+
+GET /devices
+
+POST Requests:
+
+POST /<device>/login
+POST /<device>/logout
+POST /<device>/domains
+POST /<device>/nicprofiles
+POST /<device>/uplinkprofiles
+
+POST /devices
+POST body:
+
+[
+   {
+     "deviceName": "mydevice",
+     "ipAddress": "172.10.10.1"
+   },
+   {
+   	 "deviceName": "otherDevice",
+   	 "ipAddress": "somedomain.com"
+   }
+]
+
+DELETE requests:
+
+DELETE /<device>/domains
+DELETE /<device>/nicprofiles
+DELETE /<device>/uplinkprofiles
+
+DELETE /devices/<device-name>
+
+Devices:
+
+device2 -> 172.31.143.56
+device3 -> 172.31.143.206
+device4 -> 172.31.143.89
+
+All POST requests for a device (except /login and /logout) accepts the following post body:
+{
+    "domains": [
+        {
+            "id":"ACI-vmm-100",
+            "name":"domain1",
+            "type": "vmm",
+            "encaps": [
+                {
+                    "name":"ACI-vmm-100-200",
+                    "encapType": "VLAN",
+                    "id": "200",
+                    "vxlanId": ""
+                },
+                {
+                    "name":"ACI-vmm-100-201",
+                    "encapType": "VLAN",
+                    "id": "201",
+                    "vxlanId": ""
+                }
+            ]
+        },
+        {
+            "id":"ACI-vmm-101",
+            "name":"domain2",
+            "type": "vmm",
+            "encaps": [
+                {
+                    "name":"ACI-vmm-101-203",
+                    "encapType": "PVLAN",
+                    "id": "203",
+                    "vxlanId": "",
+                    "pvlanConfig": {
+                        "pvlanMode": "Isolated",
+                        "primaryVlanId": "204",
+                        "secondaryVlanId": "203"
+                    }
+                }
+            ]
+        }
+    ],
+    "nicProfiles": [
+            {
+                "id": "A/testnic1",
+                "name": "testnic1",
+                "domainRefIds": ["ACI-vmm-100"]
+            },
+            {
+                "id": "B/testnic2",
+                "name": "testnic2",
+                "domainRefIds": ["ACI-vmm-101"]
+            }
+    ],
+    "uplinkProfiles": [
+            {
+                "id": "fabric/lan/A/pc-1",
+                "name": "testupA",
+                "domainRefIds": ["ACI-vmm-100"]
+            },
+            {
+                "id": "fabric/lan/B/pc-1",
+                "name": "testupB",
+                "domainRefIds": ["ACI-vmm-101"]
+            }
+    ]
+}
+
