@@ -5,6 +5,8 @@ $(document).ready(function() {
     
     console.log("Document Ready - Main UI thread");
     $("#dash_button").css('visibility','hidden');
+
+    // Login
     $("#login_button").click(function(e){
         e.preventDefault();
         u_input = document.getElementById("u_name").value;
@@ -12,6 +14,13 @@ $(document).ready(function() {
         console.log("U : "+ u_input +" P : "+ p_input);
         loginPostRequest(u_input, p_input);
     });
+
+    // Logout
+    $("icon-outbox").click(function(e){
+        console.log("Activate logout function");
+        logoutRequest();
+    });
+
     $("#nicprof_button").click(function(e){
         e.preventDefault();
         
@@ -29,7 +38,7 @@ $(document).ready(function() {
   
 // Login Page
 function loginPostRequest(u_input, p_input) {
-    console.log("in here");
+    console.log("[loginPostRequest] Begin");
     var json_input = JSON.stringify({
             username: u_input, //"admin",
             password: p_input
@@ -62,6 +71,10 @@ function loginPostRequest(u_input, p_input) {
     
 } // end of loginPostRequest function. 
     
+// Logout request
+function logoutRequest(){
+
+}
 function nicProfileGetRequest(){
     console.log("Here 1");
     // make calls to Nic Profiles. 
