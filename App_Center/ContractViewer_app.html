@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="scripts/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="scripts/common/bipartitelayout.min.css">
+  <link rel="stylesheet" type="text/css" href="scripts/d3/bootstrap.min.css">
+  <link href="scripts/d3/bootstrap-toggle.min.css" rel="stylesheet">
+</head>
+<body>
+<script src="scripts/d3/d3.min.js"></script>
+<script  src="scripts/common/bluebird.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/async/1.5.2/async.js"></script> -->
+<script type="text/javascript" src="/extjs/ext-all-debug.js"></script>
+<script async type="text/javascript" src="d3.tip.v0.6.3.js"></script>
+<script src="scripts/jquery/jquery.2.1.4.js"></script>
+<script async src="scripts/d3/underscore-min.js"></script>
+<script async src="scripts/common/biPartite.js"></script>
+<script src="scripts/CreateHttpRequest.js"></script>
+<script async src="scripts/common/drawFuncAndUtils.js"></script>
+<script async src="scripts/common/handleTenantRequestFilterQueries.js"></script>
+<script async src="scripts/d3/bootstrap-toggle.min.js"></script>
+
+<script>
+$(function(){
+        if (httpLoginRequest()) { // Calls the httpLoginRequest() from httprequest.js
+                  console.log("SUCCESS!");
+        } else {
+            console.log("FAIL!");
+        }
+    });
+    window.addEventListener('message', function (e) {
+        if (e.source === window.parent) {
+            var tokenObj = Ext.decode(e.data, true);
+            if (tokenObj) {
+                gDevCookie = tokenObj.token;
+                gChallenge = tokenObj.urlToken;
+            }
+        }
+    });
+</script>
+<div id="graph-container"></div>
+<div class="container">
+    <div id="player" class="hidden">
+        <div class="btn-group-vertical">
+
+        <button title="Rewind" type="button" id="button_rev" class="btn" onclick='buttonRevPress()'>
+            <i class="fa fa-backward"></i>
+            </button>
+
+        <button title="Pause" type="button" id="button_pause" class="btn" onclick='buttonPausePress()'>
+            <i class="fa fa-pause"></i>
+        </button>
+
+        <button title="Play" type="button" id="button_play" class="btn" onclick='buttonPlayPress()'>
+            <i class="fa fa-play"></i>
+        </button>
+
+        <button title="Switch to Compact View" type="button" id="overallView" class="btn" onclick='showOverallView()'>
+            <i class="glyphicon glyphicon-eye-open"></i>
+        </button>
+        <button title="Refresh" type="button" id="refreshView" class="btn" onclick='refreshView()'>
+            <i class="glyphicon glyphicon-refresh"></i>
+        </button>
+        <button title="Switch to Filter View" type="button" id="isFilterSelectedButton" class="btn" onclick='catchFilterToggle()'>
+            <i class="glyphicon glyphicon-filter"></i>
+        </button>
+        </div>
+    </div>
+    <div id="filterToggleOnly" class="hidden">
+        <div class="btn-group-vertical">
+            <button title="Refresh" type="button" id="refreshViewForZeroTraffic" class="btn" onclick='refreshView()'>
+                <i class="glyphicon glyphicon-refresh"></i>
+            </button>
+            <button title="Switch to Filter View" type="button" id="isFilterSelectedZeroTrafficCaseButton" class="btn" onclick='catchFilterToggleForZeroTraffic()'>
+                <i class="glyphicon glyphicon-filter"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div id="slider-container">
+    <div id="slider"></div>
+</div>
+</body>
+</html>

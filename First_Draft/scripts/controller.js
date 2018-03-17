@@ -28,19 +28,22 @@ $(document).ready(function() {
 });
   
 function loginPostRequest(u_input, p_input) {
-    var login = $.ajax({
-        url: "http://localhost:4567/device3/login", 
-        type: 'POST', 
-        data:JSON.stringify({
+    console.log("in here");
+    var json_input = JSON.stringify({
             username: u_input, //"admin",
             password: p_input
-        }),
-        contentType: 'text/plain', 
+        });
+    var test;
+    var login = $.ajax({
+        url: "http://localhost:4567/device4/login", 
+        type: 'POST', 
+        data: json_input,
+        //contentType: 'text/html', 
         crossDomain: true,
         xhrFields : {
              withCredentials: true // make this "true" so it allows cookie passing
         },
-        headers :{ }, 
+        //headers :{ }, 
         success : function(data, textStatus, xhr) { // "data" -  will contain the response recieved from URL. 
             console.log("[POST LOGIN]Passed Status : ", xhr.status);
             if (xhr.status==200){
@@ -51,9 +54,11 @@ function loginPostRequest(u_input, p_input) {
             }
         },
         error: function(data, textStatus, xhr) {
-            console.log("[POST LOGIN]Failed Status" + xhr.status);
+            test = data;
+            console.log("[POST LOGIN]Failed Status" + textStatus +"   data: "+data+"   xhr  "+ xhr);
         }
     });
+    
 } // end of loginPostRequest function. 
     
 function nicProfileGetRequest(){
