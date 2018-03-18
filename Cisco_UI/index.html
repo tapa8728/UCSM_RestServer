@@ -8,7 +8,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="scripts/controller.js"></script>
         <link rel="stylesheet" href="css/styles.css">
-        
+        <script>
+            devicesGetRequest();
+        </script>
     </head>
 
     <body>
@@ -17,7 +19,12 @@
         <input type="text" id="u_name" name="u" placeholder="Username" required="required" />
         <input type="password" id="p_name" name="p" placeholder="Password" required="required" />
         <!-- device dropdown -->
+        <select id="devices" name="devices" required="required" >
+                  <option value="">Select your device</option>
+        </select>
         
+
+
         <button type="submit" id="login_button" class="btn btn-primary btn-block btn-large">Login</button>
             
         <br><br><br><p class="login-result"></p>

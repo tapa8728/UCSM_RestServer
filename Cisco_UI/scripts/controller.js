@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
     
-    console.log("Document Ready - Main UI thread");
+    console.log("Controller activated.");
     $("#dash_button").css('visibility','hidden');
 
     // Login
@@ -11,33 +11,50 @@ $(document).ready(function() {
         e.preventDefault();
         u_input = document.getElementById("u_name").value;
         p_input = document.getElementById("p_name").value;
-        devicename = "device4"; // get it from the login page.
+        devicename = document.getElementById("devices").value;; // get it from the login page.
         localStorage.setItem('devicename', devicename);
         console.log("U : "+ u_input +" P : "+ p_input);
         loginPostRequest(u_input, p_input, devicename);
     });
-
-    // Logout
-    $("icon-outbox").click(function(e){
-        console.log("Activate logout function");
-        logoutRequest();
-    });
-
-    $("#nicprof_button").click(function(e){
-        e.preventDefault();
-        
-        nicProfileGetRequest();
-    });
-    $("#domains_button").click(function(e){
-        e.preventDefault();
-        domainsGetRequest();
-    });
-    $("#sysinfo_button").click(function(e){
-        e.preventDefault();
-        sysInfoGetRequest();
-    });
 });
-  
+// --------------
+// Devices 
+// --------------
+function devicesGetRequest(){
+    console.log("[devicesGetRequest] Begin");
+    var nicprofiles = $.ajax({
+        url: "http://localhost:4567/devices", 
+        type: 'GET', 
+        //contentType: 'application/json', 
+        crossDomain: true,
+        xhrFields : {
+             withCredentials: true
+        },
+        headers :{},
+        success: function(data, textStatus, xhr) {
+            console.log("[GET DEVICES] Passed Status: " + xhr.status);
+            console.log("[RESPONSE] Devices data: "+ data);
+            var dev = JSON.parse(data)['devices'];
+            for (var i = 0; i < dev.length; i++) {
+                console.log(dev[i]);
+                devname = dev[i]["deviceName"];
+                ip = dev[i]["ipAddress"];
+                $("#devices").append( 
+                    "<option value="+ devname+">"+ devname+" : "+ip+"</option>"
+                );
+                console.log("device row appended");
+            }
+            console.log("[RESPONSE] Devices in drop down menu completed");
+            // push the data on the table. ?? 
+            // $('.nic-result').text(data); 
+        },
+        error: function(data, textStatus, xhr) {
+            console.log("[GET DEVICES]Failed Status" + xhr.status);
+        }
+    });
+} // end of devicesGetRequest function. 
+
+
 // --------------
 // Login Page
 // --------------
@@ -90,7 +107,7 @@ function nicProfileGetRequest(devicename){
     console.log("Here 1");
     // make calls to Nic Profiles. 
     var nicprofiles = $.ajax({
-        url: "http://localhost:4567/device4/nicprofiles", 
+        url: "http://localhost:4567/"+devicename+"/nicprofiles", 
         type: 'GET', 
         //contentType: 'application/json', 
         crossDomain: true,
@@ -147,10 +164,7 @@ function domainsGetRequest(devicename){
         headers :{},
         success: function(data, textStatus, xhr) {
             console.log("[GET DOMAINS]Passed Status" + xhr.status);
-            console.log("Nic Profiles data: "+ data)
-
-
-            
+            console.log("Nic Profiles data: "+ data);
         },
         error: function(data, textStatus, xhr) {
             console.log("[GET DOMAINS]Failed Status" + xhr.status);
@@ -162,10 +176,10 @@ function domainsGetRequest(devicename){
 // --------------
 // Domains
 // --------------
-function sysInfoGetRequest(){
+function sysInfoGetRequest(devicename){
     // make calls to get system INformation
     var nicprofiles = $.ajax({
-        url: "http://localhost:4567/device3/systeminformation", 
+        url: "http://localhost:4567/"+ devicename +"/systeminformation", 
         type: 'GET', 
         //contentType: 'application/json', 
         crossDomain: true,
