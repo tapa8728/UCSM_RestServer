@@ -104,7 +104,7 @@ function logoutRequest(devicename){
 // Nic Profiles
 // --------------
 function nicProfileGetRequest(devicename){
-    console.log("Here 1");
+    console.log("[nicProfileGetRequest] Begin");
     // make calls to Nic Profiles. 
     var nicprofiles = $.ajax({
         url: "http://localhost:4567/"+devicename+"/nicprofiles", 
@@ -152,8 +152,9 @@ function nicProfileGetRequest(devicename){
 // Domains
 // --------------
 function domainsGetRequest(devicename){
+    console.log("[domainsGetRequest] Begin");
     // make calls to get Domains
-    var nicprofiles = $.ajax({
+    var domains = $.ajax({
         url: "http://localhost:4567/"+ devicename +"/domains", 
         type: 'GET', 
         //contentType: 'application/json', 
@@ -163,20 +164,75 @@ function domainsGetRequest(devicename){
         },
         headers :{},
         success: function(data, textStatus, xhr) {
-            console.log("[GET DOMAINS]Passed Status" + xhr.status);
-            console.log("Nic Profiles data: "+ data);
+            console.log("[GET DOMAINS] Passed Status" + xhr.status);
+            console.log("Domain data: "+ data);
+            var dom = JSON.parse(data)['domains'];
+            $("#domain_id").text(dom["id"]);
+            var encaps = dom["encaps"];
+            for (var i = 0; i < encaps.length; i++) {
+                console.log(encaps[i]);
+                name = encaps[i]['name'];
+                type = encaps[i]['type'];
+                vxlan = encaps[i]['vxlanId'];
+                if(vxlan == ""){
+                    vxlan = "N/A";
+                }
+                id = encaps[i]['id'];
+                pvlanConfig = encaps[i]['pvlanConfig'];
+                $("#domains_table").find('tbody').append( 
+                    "<tr>"+
+                    "<td><label class='checkbox'><input type='checkbox'/>"+
+                    "<span class='checkbox__input'></span></label></td>"+
+                    "<td>"+ id +"</td>"+
+                    "<td>"+ name +"</td>"+
+                    "<td>"+ type +"</td>"+
+                    "<td>"+ vxlan +"</td>"+
+                    "<td>"+ pvlanConfig +"</td>"+
+                    "</tr>" 
+                );
+                console.log("row appended");
+            }
+            console.log("[RESPONSE] Domains Table Completed");
+            // push the data on the table. ?? 
+            $('.domains-result').text(data); 
         },
         error: function(data, textStatus, xhr) {
-            console.log("[GET DOMAINS]Failed Status" + xhr.status);
+            console.log("[GET DOMAINS] Failed Status" + xhr.status);
         }
     });
 } // end of domainsGetRequest function. 
 
 
 // --------------
-// Domains
+// Uplink Profiles
+// --------------
+function uplinkProfGetRequest(devicename){
+    console.log("[uplinkProfGetRequest] Begin");
+    // make calls to get system INformation
+    var nicprofiles = $.ajax({
+        url: "http://localhost:4567/"+ devicename +"/systeminformation", 
+        type: 'GET', 
+        //contentType: 'application/json', 
+        crossDomain: true,
+        xhrFields : {
+             withCredentials: true
+        },
+        headers :{},
+        success: function(data, textStatus, xhr) {
+            console.log("[GET uplinkProfGetRequest]Passed Status" + xhr.status);
+            console.log("uplinkProfGetRequest data: "+ data)
+        },
+        error: function(data, textStatus, xhr) {
+            console.log("[GET uplinkProfGetRequest]Failed Status" + xhr.status);
+        }
+    });
+} // end of sysInfoGetRequest function. 
+
+// --------------
+// System Information
 // --------------
 function sysInfoGetRequest(devicename){
+    console.log("[sysInfoGetRequest] Begin");
     // make calls to get system INformation
     var nicprofiles = $.ajax({
         url: "http://localhost:4567/"+ devicename +"/systeminformation", 
@@ -190,6 +246,30 @@ function sysInfoGetRequest(devicename){
         success: function(data, textStatus, xhr) {
             console.log("[GET SYSTEMINFO]Passed Status" + xhr.status);
             console.log("SystemInformation data: "+ data)
+            var sys = JSON.parse(data)['nicProfiles'];
+            for (var i = 0; i < nicprofiles.length; i++) {
+                console.log(nicprofiles[i]);
+                id = nicprofiles[i]['id'];
+                name = nicprofiles[i]['name'];
+                domainRefIds = nicprofiles[i]['domainRefIds'];
+                if(domainRefIds.length == 0){
+                    domainRefIds = "N/A";
+                }
+                $("#nicprofiles_table").find('tbody').append( 
+                    "<tr>"+
+                    "<td><label class='checkbox'><input type='checkbox'/>"+
+                    "<span class='checkbox__input'></span></label></td>"+
+                    "<td>"+ id +"</td>"+
+                    "<td>"+ name +"</td>"+
+                    "<td>"+ domainRefIds +"</td>"+
+                    "</tr>" 
+                );
+                console.log("row appended");
+            }
+            console.log("[RESPONSE] Nic Profiles Table Completed");
+            // push the data on the table. ?? 
+            // $('.nic-result').text(data); 
+
         },
         error: function(data, textStatus, xhr) {
             console.log("[GET SYSTEMINFO]Failed Status" + xhr.status);

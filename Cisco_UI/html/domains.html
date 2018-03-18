@@ -9,7 +9,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="../scripts/controller.js"></script>
         <script type="text/javascript">
-            domainsGetRequest();
+            console.log("localStorage"+localStorage);
+            domainsGetRequest(localStorage.getItem('devicename'));
         </script>
     </head>
     <body class="cui">
@@ -64,34 +65,55 @@
                 <div class="content">
                     <div class="container">
                         <div class="section">
-                            <h1>Dashboard with Sidebar</h1>
-                            <p>Requires the Standard Package</p>
+                            <h1>Domains</h1>
+                            <p>This is the Domains Table.</p>
                         </div>
-                        <!-- Domains Table 
-                        1. JS needs to process data and append rows to this table. 
-                        -->
-                        <!-- <div class="col-md-12"> -->
-                            <table id="nicprofiles_table" class="table table--bordered table--highlight">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <label class="checkbox">
-                                                <input type="checkbox"/>
-                                                <span class="checkbox__input"></span>
-                                            </label>
-                                        </th>
-                                        <th class="sortable">ID<span class="sort-indicator icon-chevron-down"></span></th>
-                                        <th>Name</th>
-                                        <th>Domains</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Rows will be constructed by the JS Function -->
-                                </tbody>
-                            </table>
+                        <table id="domains_table" class="table table--bordered table--highlight">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <label class="checkbox">
+                                            <input type="checkbox"/>
+                                            <span class="checkbox__input"></span>
+                                        </label>
+                                    </th>
+                                    <th class="sortable">ID<span class="sort-indicator icon-chevron-down"></span></th>
+                                    <th>Name</th>
+                                    <th>Domains</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows will be constructed by the JS Function -->
+                            </tbody>
+                        </table>
                         <!-- </div> -->
-                        <!-- Dumping Pretty Printing the nic profile data from GET API-->
-                        <p class="nic-result"></p>
+                        <!-- Dumping Pretty Printing the domains data from GET API -->
+                        <p class="domains-result"></p>
+
+                        <div class="section">
+                            <h1>Encaps</h1>
+                            <p>This is the Encaps Table.</p>
+                        </div>
+                        <table id="encaps_table" class="table table--bordered table--highlight">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <label class="checkbox">
+                                            <input type="checkbox"/>
+                                            <span class="checkbox__input"></span>
+                                        </label>
+                                    </th>
+                                    <th class="sortable">ID<span class="sort-indicator icon-chevron-down"></span></th>
+                                    <th>Name</th>
+                                    <th>Domains</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows will be constructed by the JS Function -->
+                            </tbody>
+                        </table>
+                        <!-- Dumping Pretty Printing the encaps data from GET API -->
+                        <p class="encaps-result"></p>
                     </div>
                 </div>
                 <footer class="footer footer--new">
