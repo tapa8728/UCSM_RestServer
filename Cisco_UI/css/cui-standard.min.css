@@ -4011,6 +4011,36 @@ body.cui {
                 box-shadow: inset 0 0 0 2px #dfdfdf; }
       .cui .btn--white-ghost.selected {
         background-color: #fff; }
+
+    .cui .btn--blue-ghost {
+      border: 1px solid #4aa8f9;
+      color: #4aa8f9;
+      background: transparent;
+      -webkit-box-shadow: inset 0 0 0 1px #fff;
+              box-shadow: inset 0 0 0 1px #fff; }
+      .cui .btn--blue-ghost:hover {
+        -webkit-box-shadow: 0 0 0 0 transparent;
+                box-shadow: 0 0 0 0 transparent;
+        background-color: #4aa8f9;
+        color: #dfdfdf; }
+      .cui .btn--blue-ghost:focus {
+        -webkit-box-shadow: 0 0 1px 1px #dfdfdf;
+                box-shadow: 0 0 1px 1px #dfdfdf;
+        border: 1px solid #4aa8f9; }
+      .cui .btn--blue-ghost:active {
+        -webkit-box-shadow: 0 0 0 0 transparent;
+                box-shadow: 0 0 0 0 transparent;
+        color: #4aa8f9;
+        /*background-color: #626469;*/ }
+      .cui .btn--blue-ghost[disabled], .cui .btn--blue-ghost.disabled {
+        opacity: 1;
+        color: #c6c7ca;
+        background-color: #dfdfdf;
+        -webkit-box-shadow: inset 0 0 0 2px #dfdfdf;
+                box-shadow: inset 0 0 0 2px #dfdfdf; }
+      .cui .btn--blue-ghost.selected {
+        background-color: #204a6d; }
+
     .cui .btn--gray-ghost {
       border: 1px solid transparent;
       background: transparent;
@@ -4020,7 +4050,7 @@ body.cui {
       .cui .btn--gray-ghost:hover {
         -webkit-box-shadow: 0 0 0 0 transparent;
                 box-shadow: 0 0 0 0 transparent;
-        background-color: #626469;
+        background-color: #dfdfdf;
         color: #fff; }
       .cui .btn--gray-ghost:focus {
         -webkit-box-shadow: 0 0 1px 1px #626469;

@@ -42,7 +42,17 @@ function devicesGetRequest(){
                 $("#devices").append( 
                     "<option value="+ devname+">"+ devname+" : "+ip+"</option>"
                 );
-                console.log("device row appended");
+                
+                // Devices Table
+                $("#devices_table").find('tbody').append( 
+                    "<tr>"+
+                    "<td><label class='checkbox'><input type='checkbox'/>"+
+                    "<span class='checkbox__input'></span></label></td>"+
+                    "<td>"+ devname +"</td>"+
+                    "<td>"+ ip +"</td>"+
+                    "</tr>" 
+                );
+
             }
             console.log("[RESPONSE] Devices in drop down menu completed");
             // push the data on the table. ?? 
