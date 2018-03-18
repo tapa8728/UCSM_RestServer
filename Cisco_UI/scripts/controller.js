@@ -270,30 +270,18 @@ function sysInfoGetRequest(devicename){
         headers :{},
         success: function(data, textStatus, xhr) {
             console.log("[GET SYSTEMINFO]Passed Status" + xhr.status);
-            console.log("SystemInformation data: "+ data)
-            var sys = JSON.parse(data)['nicProfiles'];
-            for (var i = 0; i < nicprofiles.length; i++) {
-                console.log(nicprofiles[i]);
-                id = nicprofiles[i]['id'];
-                name = nicprofiles[i]['name'];
-                domainRefIds = nicprofiles[i]['domainRefIds'];
-                if(domainRefIds.length == 0){
-                    domainRefIds = "N/A";
-                }
-                $("#nicprofiles_table").find('tbody').append( 
-                    "<tr>"+
-                    "<td><label class='checkbox'><input type='checkbox'/>"+
-                    "<span class='checkbox__input'></span></label></td>"+
-                    "<td>"+ id +"</td>"+
-                    "<td>"+ name +"</td>"+
-                    "<td>"+ domainRefIds +"</td>"+
-                    "</tr>" 
-                );
-                console.log("row appended");
-            }
-            console.log("[RESPONSE] Nic Profiles Table Completed");
+            console.log("SystemInformation data: "+ data);
+            var sys = JSON.parse(data)['systemInformation'];
+            $("#sysinfo_table").find('tbody').append( 
+                    "<tr><td> <b>Manufacturer</b></td><td>"+sys['manufacturer']+"</td></tr>"+
+                    "<tr><td> <b>Model</b></td><td>"+sys['model']+"</td></tr>"+
+                    "<tr><td> <b>Name</b></td><td>"+sys['name']+"</td></tr>"+
+                    "<tr><td> <b>Version</b></td><td>"+sys['version']+"</td></tr>"+
+                    "<tr><td> <b>Capabilities</b></td><td>"+sys['capabilities']['feature']+"</td></tr>"
+            );
+            console.log("[RESPONSE] SystemInformation Table Completed");
             // push the data on the table. ?? 
-            // $('.nic-result').text(data); 
+            //$('.sysinfo-result').text(data); 
 
         },
         error: function(data, textStatus, xhr) {
