@@ -64,14 +64,14 @@
                 <div class="content">
                     <div class="container">
                         <div class="section">
-                            <h1>Dashboard with Sidebar</h1>
-                            <p>Requires the Standard Package</p>
+                            <h1>Nic Profiles</h1>
+                            <p>TBD Some information about what Nic Profiles are and what their purpose in this application is</p>
                         </div>
                         <!-- Nic Profle Table 
                         1. JS needs to process data and append rows to this table. 
                         -->
-                        <div id="nicprofile_table" class="col-md-12">
-                            <table class="table table--bordered table--highlight">
+                        <!-- <div class="col-md-12"> -->
+                            <table id="nicprofiles_table" class="table table--bordered table--highlight">
                                 <thead>
                                     <tr>
                                         <th>
@@ -80,47 +80,18 @@
                                                 <span class="checkbox__input"></span>
                                             </label>
                                         </th>
-                                        <th class="sortable">Header 1 <span class="sort-indicator icon-chevron-down"></span></th>
-                                        <th>Header 2</th>
-                                        <th>Header 3</th>
+                                        <th class="sortable">ID<span class="sort-indicator icon-chevron-down"></span></th>
+                                        <th>Name</th>
+                                        <th>Domains</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <label class="checkbox">
-                                                <input type="checkbox"/>
-                                                <span class="checkbox__input"></span>
-                                            </label>
-                                        </td>
-                                        <td>Row 1, Column 1</td>
-                                        <td>Row 1, Column 2</td>
-                                        <td>Row 1, Column 3</td>
-                                    </tr>
-                                    <tr class="active">
-                                        <td>
-                                            <label class="checkbox">
-                                                <input type="checkbox" checked>
-                                                <span class="checkbox__input"></span>
-                                            </label>
-                                        </td>
-                                        <td>ACTIVE</td>
-                                        <td>Row 2, Column 2</td>
-                                        <td>Row 2, Column 3</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="checkbox">
-                                                <input type="checkbox"/>
-                                                <span class="checkbox__input"></span>
-                                            </label>
-                                        </td>
-                                        <td>Row 3, Column 1</td>
-                                        <td>Row 3, Column 2</td>
-                                        <td>Row 3, Column 3</td>
-                                    </tr>
+                                    <!-- Rows will be constructed by the JS Function -->
                                 </tbody>
                             </table>
+                        <!-- </div> -->
+                        <!-- Dumping Pretty Printing the nic profile data from GET API-->
+                        <p class="nic-result"></p>
                     </div>
                 </div>
                 <!-- How to make the footer stick to the bottom of the page ? -->

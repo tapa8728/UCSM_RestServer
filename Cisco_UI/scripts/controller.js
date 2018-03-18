@@ -88,11 +88,31 @@ function nicProfileGetRequest(){
         },
         headers :{},
         success: function(data, textStatus, xhr) {
-            console.log("[GET NICPROFILES]Passed Status" + xhr.status);
-            console.log("Nic Profiles data: "+ data)
-            
+            console.log("[GET NICPROFILES] Passed Status: " + xhr.status);
+            console.log("[RESPONSE] Nic Profiles data: "+ data);
+            var nicprofiles = JSON.parse(data)['nicProfiles'];
+            for (var i = 0; i < nicprofiles.length; i++) {
+                console.log(nicprofiles[i]);
+                id = nicprofiles[i]['id'];
+                name = nicprofiles[i]['name'];
+                domainRefIds = nicprofiles[i]['domainRefIds'];
+                if(domainRefIds.length == 0){
+                    domainRefIds = "N/A";
+                }
+                $("#nicprofiles_table").find('tbody').append( 
+                    "<tr>"+
+                    "<td><label class='checkbox'><input type='checkbox'/>"+
+                    "<span class='checkbox__input'></span></label></td>"+
+                    "<td>"+ id +"</td>"+
+                    "<td>"+ name +"</td>"+
+                    "<td>"+ domainRefIds +"</td>"+
+                    "</tr>" 
+                );
+                console.log("row appended");
+            }
+            console.log("[RESPONSE] Nic Profiles Table Completed");
             // push the data on the table. ?? 
-            $('.nic-result').text(data); 
+            // $('.nic-result').text(data); 
         },
         error: function(data, textStatus, xhr) {
             console.log("[GET NICPROFILES]Failed Status" + xhr.status);
@@ -114,6 +134,8 @@ function domainsGetRequest(){
         success: function(data, textStatus, xhr) {
             console.log("[GET DOMAINS]Passed Status" + xhr.status);
             console.log("Nic Profiles data: "+ data)
+
+
             
         },
         error: function(data, textStatus, xhr) {
