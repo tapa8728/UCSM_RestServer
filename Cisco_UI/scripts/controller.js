@@ -79,7 +79,7 @@ function nicProfileGetRequest(){
     console.log("Here 1");
     // make calls to Nic Profiles. 
     var nicprofiles = $.ajax({
-        url: "http://localhost:4567/device3/nicprofiles", 
+        url: "http://localhost:4567/device4/nicprofiles", 
         type: 'GET', 
         //contentType: 'application/json', 
         crossDomain: true,

@@ -4,6 +4,13 @@
         <meta charset="utf-8">
         <title>Rest Server Dashboard</title>
         <link rel="stylesheet" href="../css/cui-standard.min.css">
+        <!-- Scripts -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="../scripts/controller.js"></script>
+        <script type="text/javascript">
+            nicProfileGetRequest();
+        </script>
     </head>
     <body class="cui">
         <div class="content-fluid">
@@ -60,30 +67,63 @@
                             <h1>Dashboard with Sidebar</h1>
                             <p>Requires the Standard Package</p>
                         </div>
-                        <div class="row base-margin-top">
-                            <div class="col-md-3 text-center">
-                                <img class="thumb thumb--huge thumb--reflected" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==">
-                                <h4 class="text-bold base-margin-top">Label 1</h4>
-                                <p>Description</p>
-                            </div>
-                            <div class="col-md-3 text-center">
-                                <img class="thumb thumb--huge thumb--reflected" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==">
-                                <h4 class="text-bold base-margin-top">Label 2</h4>
-                                <p>Description</p>
-                            </div>
-                            <div class="col-md-3 text-center">
-                                <img class="thumb thumb--huge thumb--reflected" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==">
-                                <h4 class="text-bold base-margin-top">Label 3</h4>
-                                <p>Description</p>
-                            </div>
-                            <div class="col-md-3 text-center">
-                                <img class="thumb thumb--huge thumb--reflected" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==">
-                                <h4 class="text-bold base-margin-top">Label 4</h4>
-                                <p>Description</p>
-                            </div>
-                        </div>
+                        <!-- Nic Profle Table 
+                        1. JS needs to process data and append rows to this table. 
+                        -->
+                        <div id="nicprofile_table" class="col-md-12">
+                            <table class="table table--bordered table--highlight">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <label class="checkbox">
+                                                <input type="checkbox"/>
+                                                <span class="checkbox__input"></span>
+                                            </label>
+                                        </th>
+                                        <th class="sortable">Header 1 <span class="sort-indicator icon-chevron-down"></span></th>
+                                        <th>Header 2</th>
+                                        <th>Header 3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <label class="checkbox">
+                                                <input type="checkbox"/>
+                                                <span class="checkbox__input"></span>
+                                            </label>
+                                        </td>
+                                        <td>Row 1, Column 1</td>
+                                        <td>Row 1, Column 2</td>
+                                        <td>Row 1, Column 3</td>
+                                    </tr>
+                                    <tr class="active">
+                                        <td>
+                                            <label class="checkbox">
+                                                <input type="checkbox" checked>
+                                                <span class="checkbox__input"></span>
+                                            </label>
+                                        </td>
+                                        <td>ACTIVE</td>
+                                        <td>Row 2, Column 2</td>
+                                        <td>Row 2, Column 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="checkbox">
+                                                <input type="checkbox"/>
+                                                <span class="checkbox__input"></span>
+                                            </label>
+                                        </td>
+                                        <td>Row 3, Column 1</td>
+                                        <td>Row 3, Column 2</td>
+                                        <td>Row 3, Column 3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                     </div>
                 </div>
+                <!-- How to make the footer stick to the bottom of the page ? -->
                 <footer class="footer footer--new">
                     <div class="footer__links">
                         <ul class="list">
@@ -103,7 +143,7 @@
                             </a>
                         </div>
                         <div class="footer__copyright">
-                            <div>Copyright &copy; 2017 Cisco Systems Inc.</div>
+                            <div>Copyright &copy; 2018 Cisco Systems Inc.</div>
                             <div>All rights reserved.</div>
                         </div>
                     </div>
