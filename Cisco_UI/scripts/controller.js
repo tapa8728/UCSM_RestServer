@@ -235,7 +235,7 @@ function uplinkProfGetRequest(devicename){
     console.log("[uplinkProfGetRequest] Begin");
     // make calls to get system INformation
     var nicprofiles = $.ajax({
-        url: "http://localhost:4567/"+ devicename +"/systeminformation", 
+        url: "http://localhost:4567/"+ devicename +"/uplinkprofiles", 
         type: 'GET', 
         //contentType: 'application/json', 
         crossDomain: true,
@@ -245,7 +245,37 @@ function uplinkProfGetRequest(devicename){
         headers :{},
         success: function(data, textStatus, xhr) {
             console.log("[GET uplinkProfGetRequest]Passed Status" + xhr.status);
-            console.log("uplinkProfGetRequest data: "+ data)
+            console.log("uplinkProfGetRequest data: "+ data);
+            var json = JSON.parse(data);
+            var up = json['uplinkProfiles'];
+            console.log("up:", up);
+            // Uplink Profiles Table
+            for (var i = 0; i < up.length; i++) {
+                id = up[i]['id'];
+                name = up[i]['name'];
+                domainRefIds = up[i]['domainRefIds']; // will be an array
+                if(domainRefIds.length == 0){
+                    domainRefIds = "N/A";
+                }
+                else{
+                    console.log("How do display the domains ref ids ?");
+                }
+                
+                $("#uplinkprof_table").find('tbody').append( 
+                    "<tr>"+
+                    "<td><label class='checkbox'><input type='checkbox'/>"+
+                    "<span class='checkbox__input'></span></label></td>"+
+                    "<td>"+ id +"</td>"+
+                    "<td>"+name +"</td>"+
+                    "<td>"+ domainRefIds +"</td>"+
+                    "</tr>" 
+                );
+                console.log("uplink profile row appended");
+            }
+            // push the data on the table. ?? 
+            $('.uplinkprof-result').text(data); 
+
+
         },
         error: function(data, textStatus, xhr) {
             console.log("[GET uplinkProfGetRequest]Failed Status" + xhr.status);
