@@ -11,8 +11,10 @@ $(document).ready(function() {
         e.preventDefault();
         u_input = document.getElementById("u_name").value;
         p_input = document.getElementById("p_name").value;
+        devicename = "device4"; // get it from the login page.
+        localStorage.setItem('devicename', devicename);
         console.log("U : "+ u_input +" P : "+ p_input);
-        loginPostRequest(u_input, p_input);
+        loginPostRequest(u_input, p_input, devicename);
     });
 
     // Logout
@@ -36,8 +38,10 @@ $(document).ready(function() {
     });
 });
   
+// --------------
 // Login Page
-function loginPostRequest(u_input, p_input) {
+// --------------
+function loginPostRequest(u_input, p_input, devicename) {
     console.log("[loginPostRequest] Begin");
     var json_input = JSON.stringify({
             username: u_input, //"admin",
@@ -45,7 +49,7 @@ function loginPostRequest(u_input, p_input) {
         });
     var test;
     var login = $.ajax({
-        url: "http://localhost:4567/device4/login", 
+        url: "http://localhost:4567/"+devicename+"/login", 
         type: 'POST', 
         data: json_input,
         //contentType: 'text/html',   // toggle this in
@@ -70,12 +74,19 @@ function loginPostRequest(u_input, p_input) {
     });
     
 } // end of loginPostRequest function. 
-    
+
+
+// -------------- 
 // Logout request
-function logoutRequest(){
+// --------------
+function logoutRequest(devicename){
 
 }
-function nicProfileGetRequest(){
+
+// --------------
+// Nic Profiles
+// --------------
+function nicProfileGetRequest(devicename){
     console.log("Here 1");
     // make calls to Nic Profiles. 
     var nicprofiles = $.ajax({
@@ -120,10 +131,13 @@ function nicProfileGetRequest(){
     });
 } // end of nicProfileGetRequest function. 
 
-function domainsGetRequest(){
+// --------------
+// Domains
+// --------------
+function domainsGetRequest(devicename){
     // make calls to get Domains
     var nicprofiles = $.ajax({
-        url: "http://localhost:4567/device3/domains", 
+        url: "http://localhost:4567/"+ devicename +"/domains", 
         type: 'GET', 
         //contentType: 'application/json', 
         crossDomain: true,
@@ -142,8 +156,12 @@ function domainsGetRequest(){
             console.log("[GET DOMAINS]Failed Status" + xhr.status);
         }
     });
-} // end of nicProfileGetRequest function. 
+} // end of domainsGetRequest function. 
 
+
+// --------------
+// Domains
+// --------------
 function sysInfoGetRequest(){
     // make calls to get system INformation
     var nicprofiles = $.ajax({
