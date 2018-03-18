@@ -166,35 +166,60 @@ function domainsGetRequest(devicename){
         success: function(data, textStatus, xhr) {
             console.log("[GET DOMAINS] Passed Status" + xhr.status);
             console.log("Domain data: "+ data);
-            var dom = JSON.parse(data)['domains'];
-            $("#domain_id").text(dom["id"]);
-            var encaps = dom["encaps"];
-            for (var i = 0; i < encaps.length; i++) {
-                console.log(encaps[i]);
-                name = encaps[i]['name'];
-                type = encaps[i]['type'];
-                vxlan = encaps[i]['vxlanId'];
-                if(vxlan == ""){
-                    vxlan = "N/A";
-                }
-                id = encaps[i]['id'];
-                pvlanConfig = encaps[i]['pvlanConfig'];
+            var json = JSON.parse(data);
+            var dom = json['domains'];
+            console.log("dom:", dom);
+            // Domain Table
+            for (var i = 0; i < dom.length; i++) {
+                id = dom[i]['id'];
+                name = dom[i]['name'];
+                type = dom[i]['type'];
+                encap_num = dom[i]['encaps'].length;
                 $("#domains_table").find('tbody').append( 
                     "<tr>"+
                     "<td><label class='checkbox'><input type='checkbox'/>"+
                     "<span class='checkbox__input'></span></label></td>"+
                     "<td>"+ id +"</td>"+
-                    "<td>"+ name +"</td>"+
+                    "<td>"+name +"</td>"+
                     "<td>"+ type +"</td>"+
-                    "<td>"+ vxlan +"</td>"+
-                    "<td>"+ pvlanConfig +"</td>"+
+                    "<td>"+ encap_num +"</td>"+
                     "</tr>" 
                 );
                 console.log("row appended");
             }
+            // Encaps table, should be linked to selection on domain table.. currently show all possible encaps
+            for (var j = 0; j < dom.length; j++) {
+                var encaps = dom[j]["encaps"]; // this will be an array
+                for (var i = 0; i<encaps.length; i++) {
+                    name = encaps[i]['name'];
+                    type = encaps[i]['encapType'];
+                    vxlan = encaps[i]['vxlanId'];
+                    if(vxlan == ""){
+                        vxlan = "N/A";
+                    }
+                    id = encaps[i]['id'];
+                    pvlanConfig = encaps['pvlanConfig'];
+                    if(pvlanConfig == null){
+                        pvlanConfig = "N/A"
+                    }
+                    $("#encaps_table").find('tbody').append( 
+                        "<tr>"+
+                        "<td><label class='checkbox'><input type='checkbox'/>"+
+                        "<span class='checkbox__input'></span></label></td>"+
+                        "<td>"+ id +"</td>"+
+                        "<td>"+ name +"</td>"+
+                        "<td>"+ type +"</td>"+
+                        "<td>"+ vxlan +"</td>"+
+                        "<td>"+ pvlanConfig +"</td>"+
+                        "</tr>" 
+                    );
+                    console.log("row appended");
+                }
+                
+            }
             console.log("[RESPONSE] Domains Table Completed");
             // push the data on the table. ?? 
-            $('.domains-result').text(data); 
+            //$('.domains-result').text(data); 
         },
         error: function(data, textStatus, xhr) {
             console.log("[GET DOMAINS] Failed Status" + xhr.status);
