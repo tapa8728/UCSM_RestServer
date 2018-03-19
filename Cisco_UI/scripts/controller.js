@@ -6,15 +6,23 @@ $(document).ready(function() {
     console.log("Controller activated.");
     $("#dash_button").css('visibility','hidden');
 
+    var currdevicename= "";
+    var currdeviceIP = "";
     // Login
     $("#login_button").click(function(e){
         e.preventDefault();
         u_input = document.getElementById("u_name").value;
         p_input = document.getElementById("p_name").value;
-        devicename = document.getElementById("devices").value;; // get it from the login page.
-        localStorage.setItem('devicename', devicename);
+        device= document.getElementById("devices").value;   // get it from the login page.
+        console.log("Before splitting device :" + device);
+        currdevicename = device.split(":")[0];
+        currdeviceIP = device.split(":")[1];
+        console.log("currdevicename : ", currdevicename);
+        console.log("currdeviceIP : ", currdeviceIP);
+        localStorage.setItem('devicename', currdevicename);
+        localStorage.setItem('deviceIP', currdeviceIP);
         console.log("U : "+ u_input +" P : "+ p_input);
-        loginPostRequest(u_input, p_input, devicename);
+        loginPostRequest(u_input, p_input, currdevicename);
     });
 
     // Add a device pop-up
@@ -24,11 +32,32 @@ $(document).ready(function() {
         $( "#addDevice_modal" ).dialog( "open" );
     });
 
-    // Add a device pop-up
+    // Submitting add device
+    $("#addDev_submit").click(function(e){
+        newDevName = document.getElementById("newDevName").value;
+        newDevIP = document.getElementById("newDevIP").value;
+        $("#addDevice_modal").dialog("close");
+        addNewDeviceHandler(newDevName, newDevIP);
+    });
+
+    // Delete a device  pop-up
     $( "#delDevice_modal" ).dialog({ autoOpen: false });
     $( "#del_device" ).click(function() {
         console.log("Inside Delete Device Modal");
         $( "#delDevice_modal" ).dialog( "open" );
+    });
+
+    // Submitting delete device
+    $("#delDev_submit").click(function(e){
+        $("#delDevice_modal").dialog("close");
+        newDevName = document.getElementById("newDevName").value;
+        newDevIP = document.getElementById("newDevIP").value;
+        delNewDeviceHandler(newDevName, newDevIP);
+    });
+
+    // cancelling delete device
+    $("#delDev_cancel").click(function(e){
+        $("#delDevice_modal").dialog("close");
     });
 });
 
@@ -55,7 +84,7 @@ function devicesGetRequest(){
                 devname = dev[i]["deviceName"];
                 ip = dev[i]["ipAddress"];
                 $("#devices").append( 
-                    "<option value="+ devname+">"+ devname+" : "+ip+"</option>"
+                    "<option value="+ devname+":"+ip+">"+ devname+" : "+ip+"</option>"
                 );
                 
                 // Devices Table
@@ -78,6 +107,74 @@ function devicesGetRequest(){
         }
     });
 } // end of devicesGetRequest function. 
+
+// --------------
+// Add a new Device
+// --------------
+function addNewDeviceHandler(devName, devIP){
+    console.log("[NEW DEVICE] Begin");
+    var json_input = JSON.stringify(
+        [
+            {
+                deviceName: localStorage.get, //Current device you are logged into. 
+                ipAddress: p_input
+            },
+            {
+                deviceName: u_input, //"admin",
+                ipAddress: p_input
+            }
+        ]);
+    var addNewDevice = $.ajax({
+        url: "http://localhost:4567/"+devicename+"/nicprofiles", 
+        type: 'POST', 
+        //contentType: 'application/json', 
+        crossDomain: true,
+        xhrFields : {
+             withCredentials: true
+        },
+        headers :{
+
+        },
+        success: function(data, textStatus, xhr) {
+            console.log("[GET NICPROFILES] Passed Status: " + xhr.status);
+            console.log("[RESPONSE] Nic Profiles data: "+ data);
+            var nicprofiles = JSON.parse(data)['nicProfiles'];
+            for (var i = 0; i < nicprofiles.length; i++) {
+                console.log(nicprofiles[i]);
+                id = nicprofiles[i]['id'];
+                name = nicprofiles[i]['name'];
+                domainRefIds = nicprofiles[i]['domainRefIds'];
+                if(domainRefIds.length == 0){
+                    domainRefIds = "N/A";
+                }
+                $("#nicprofiles_table").find('tbody').append( 
+                    "<tr>"+
+                    "<td><label class='checkbox'><input type='checkbox'/>"+
+                    "<span class='checkbox__input'></span></label></td>"+
+                    "<td>"+ id +"</td>"+
+                    "<td>"+ name +"</td>"+
+                    "<td>"+ domainRefIds +"</td>"+
+                    "</tr>" 
+                );
+                console.log("row appended");
+            }
+            console.log("[RESPONSE] Nic Profiles Table Completed");
+            // push the data on the table. ?? 
+            // $('.nic-result').text(data); 
+        },
+        error: function(data, textStatus, xhr) {
+            console.log("[GET NICPROFILES]Failed Status" + xhr.status);
+        }
+    });
+}
+
+// --------------
+// Delete a new Device
+// --------------
+function delNewDeviceHandler(devName, devIP){
+    console.log("[DELETE DEVICE] Begin");
+
+}
 
 
 // --------------
