@@ -59,7 +59,17 @@ $(document).ready(function() {
     $("#delDev_cancel").click(function(e){
         $("#delDevice_modal").dialog("close");
     });
+
+    $('input.checkbox').on('change', function() {
+        console.log("Checkbox");
+        $('input.checkbox').not(this).prop('checked', false);  
+    });
 });
+
+function booya(){
+    console.log("Checkbox marked");
+    console.log("this:", this);
+}
 
 // --------------
 // Devices 
@@ -92,8 +102,8 @@ function devicesGetRequest(){
                 
                 // Devices Table
                 $("#devices_table").find('tbody').append( 
-                    "<tr>"+
-                    "<td><label class='checkbox'><input type='checkbox'/>"+
+                    "<tr id='tr-row'>"+
+                    "<td><label class='checkbox'><input type='checkbox' id='cbox' onclick=booya()>"+
                     "<span class='checkbox__input'></span></label></td>"+
                     "<td>"+ devname +"</td>"+
                     "<td>"+ ip +"</td>"+
