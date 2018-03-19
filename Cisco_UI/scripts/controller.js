@@ -60,15 +60,38 @@ $(document).ready(function() {
         $("#delDevice_modal").dialog("close");
     });
 
-    $('input.checkbox').on('change', function() {
-        console.log("Checkbox");
-        $('input.checkbox').not(this).prop('checked', false);  
-    });
 });
 
-function booya(){
-    console.log("Checkbox marked");
-    console.log("this:", this);
+function rowClick(row_id){
+    console.log("rowClick : ", row_id);
+    row_find = "#"+row_id;
+    console.log("Row to be found :", row_find);
+    var dname=$("#devices_table").find(row_find).find("#dev_name").html();
+    var dip = $("#devices_table").find(row_find).find("#dev_ip").html();
+    console.log("Dev name : "+dname);
+    console.log("Dev IP : "+dip);
+    //isChecked = $("#devices_table").find(row_find).find("#cbox").is(':checked');
+    //console.log(row_find + " Is checked - " + isChecked);
+    
+
+    // now if this row is checked, uncheck all others
+    // if (isChecked){
+    //     var t =  $("#devices_table").find('tbody').children();
+    //     for(var m=0; m<t.length; m++){
+    //         if(t[m]['id'] == row_id){
+    //             console.log("Do notthing");
+    //         }
+    //         else{
+    //             console.log("Unselect all others");
+    //             if($("#tr-row2").children().find("#cbox").is(':checked')){
+    //                 console.log("uncheck this");
+    //                 $("#tr-row2").children().find("#cbox").prop('checked', false);
+    //                 console.log("Uncheckd");
+    //             }
+    //         }
+    //     }
+
+    // }
 }
 
 // --------------
@@ -89,9 +112,10 @@ function devicesGetRequest(){
             console.log("[GET DEVICES] Passed Status: " + xhr.status);
             console.log("[RESPONSE] Devices data: "+ data);
             var dev = JSON.parse(data)['devices'];
-            // clear elements
+            // clear elements 
             $("#devices_table").find('tbody').empty();
             $("#devices").empty();
+            var row_id = "";
             for (var i = 0; i < dev.length; i++) {
                 console.log(dev[i]);
                 devname = dev[i]["deviceName"];
@@ -99,16 +123,17 @@ function devicesGetRequest(){
                 $("#devices").append( 
                     "<option value="+ devname+":"+ip+">"+ devname+" : "+ip+"</option>"
                 );
-                
+                row_id = 'tr-row'+i;
                 // Devices Table
                 $("#devices_table").find('tbody').append( 
-                    "<tr id='tr-row'>"+
-                    "<td><label class='checkbox'><input type='checkbox' id='cbox' onclick=booya()>"+
-                    "<span class='checkbox__input'></span></label></td>"+
-                    "<td>"+ devname +"</td>"+
-                    "<td>"+ ip +"</td>"+
+                    "<tr id='"+row_id+"' onclick=rowClick('"+row_id+"')>"+
+                    "<td><label class='radio'><input type='radio'>"+
+                    "<span class='radio__input'></span></label></td>"+
+                    "<td id='dev_name'>"+ devname +"</td>"+
+                    "<td id='dev_ip'>"+ ip +"</td>"+
                     "</tr>" 
                 );
+                // $("#devices_table").find("#tr-row0").find("#cbox").is(':checked') 
 
             }
             console.log("[RESPONSE] Devices in drop down menu completed");
