@@ -5,6 +5,8 @@ $(document).ready(function() {
     
     console.log("Controller activated.");
     $("#dash_button").css('visibility','hidden');
+    $('#device_connect_sidebar').css('visibility','hidden');
+
 
     var currdevicename= "";
     var currdeviceIP = "";
@@ -25,6 +27,29 @@ $(document).ready(function() {
         loginPostRequest(u_input, p_input, currdevicename);
     });
 
+
+    /* --------------------------
+    *   Connect to another Device 
+    ----------------------------*/
+    // Connect to Device Pop-up ..  accepts username/password
+    $( "#connectDevice_modal" ).dialog({ autoOpen: false });
+    $( "#conn_device" ).click(function() {
+        console.log("Inside Connect Device Modal");
+        $( "#connectDevice_modal" ).dialog( "open" );
+    });
+
+    // Submitting add device
+    $("#connectDev_submit").click(function(e){
+        user = document.getElementById("conn_user").value;
+        pass = document.getElementById("conn_pass").value;
+        $("#connectDevice_modal").dialog("close");
+        connDevice = localStorage.getItem('sel_dname');
+        connectDeviceHandler(user, pass, connDevice);
+    });
+
+    /* --------------------------
+    *   Add a new device 
+    ----------------------------*/
     // Add a device pop-up
     $( "#addDevice_modal" ).dialog({ autoOpen: false });
     $( "#add_device" ).click(function() {
@@ -40,6 +65,9 @@ $(document).ready(function() {
         addNewDeviceHandler(newDevName, newDevIP);
     });
 
+    /* --------------------------
+    *   Deleting an existing Device 
+    ----------------------------*/
     // Delete a device  pop-up
     $( "#delDevice_modal" ).dialog({ autoOpen: false });
     $( "#del_device" ).click(function() {
@@ -50,8 +78,8 @@ $(document).ready(function() {
     // Submitting delete device
     $("#delDev_submit").click(function(e){
         $("#delDevice_modal").dialog("close");
-        toDel_dname = localStorage.getItem('del_dname');
-        toDel_dip = localStorage.getItem('del_dip');
+        toDel_dname = localStorage.getItem('sel_dname');
+        toDel_dip = localStorage.getItem('sel_dip');
         delDeviceHandler(toDel_dname, toDel_dip);
     });
 
@@ -61,7 +89,7 @@ $(document).ready(function() {
     });
 
 });
-
+// Selects a row and adds it to the local storage: sel_dname, sel_dip.
 function rowClick(row_id){
     console.log("rowClick : ", row_id);
     row_find = "#"+row_id;
@@ -71,9 +99,9 @@ function rowClick(row_id){
     console.log("Dev name : "+dname);
     console.log("Dev IP : "+dip);
     // add to local storage
-    localStorage.setItem('del_dname', dname);
-    localStorage.setItem('del_dip', dip);
-    console.log("Device to be deleted Stored in local storage : " +localStorage.getItem('del_dname'));
+    localStorage.setItem('sel_dname', dname);
+    localStorage.setItem('sel_dip', dip);
+    console.log("Device to be deleted Stored in local storage : " +localStorage.getItem('sel_dname'));
     //isChecked = $("#devices_table").find(row_find).find("#cbox").is(':checked');
     //console.log(row_find + " Is checked - " + isChecked);
     
@@ -96,6 +124,44 @@ function rowClick(row_id){
     //     }
 
     // }
+}
+
+// -------------------
+// Login to a specific Device 
+// -------------------
+function connectDeviceHandler(user, pass, device_name)
+{
+    console.log("[connectDeviceHandler] Begin");
+    var json_input = JSON.stringify({
+            username: user, //"device user",
+            password: pass
+        });
+    var test;
+    var login = $.ajax({
+        url: "http://localhost:4567/"+device_name+"/login", 
+        type: 'POST', 
+        data: json_input,
+        //contentType: 'text/html',   // toggle this in
+        crossDomain: true,
+        xhrFields : {
+             withCredentials: true // make this "true" so it allows cookie passing
+        },
+        //headers :{ }, 
+        success : function(data, textStatus, xhr) { // "data" -  will contain the response recieved from URL. 
+            console.log("[POST CONNECT DEVICE]Passed Status : ", xhr.status);
+            if (xhr.status==200){
+                console.log("Device connection Successful");
+                // Show all the sidebar options. 
+                $('#device_connect_sidebar').css('visibility','visible');
+                $('#device_title').text(device_name);
+            }
+        },
+        error: function(data, textStatus, xhr) {
+            test = data;
+            console.log("[POST CONNECT DEVICE]Failed Status" + textStatus +"   data: "+data+"   xhr  "+ xhr);
+        }
+    });
+    
 }
 
 // --------------
@@ -202,8 +268,8 @@ function delDeviceHandler(d1, d2){
                 ipAddress: localStorage.getItem('deviceIP')
             },
             {
-                deviceName: localStorage.getItem('del_dname'), //device you want to delete
-                ipAddress: localStorage.getItem('del_dip')
+                deviceName: localStorage.getItem('sel_dname'), //device you want to delete
+                ipAddress: localStorage.getItem('sel_dip')
             }
         ]);
     var delDevice = $.ajax({

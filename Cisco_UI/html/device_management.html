@@ -27,12 +27,24 @@
                 <ul>
                     <li class="sidebar__item"><a href="dashboard.html">Dashboard</a></li>
                     <li class="sidebar__item"><a href="device_management.html">Device Management</a></li>
-                    <li class="sidebar__item"><a href="nic_profiles.html">Nic Profiles</a></li>
+                    <!-- <li class="sidebar__item"><a href="nic_profiles.html">Nic Profiles</a></li>
                     <li class="sidebar__item"><a href="domains.html">Domains</a></li>
                     <li class="sidebar__item"><a href="uplink_profiles.html">Uplink Profiles</a></li>
                     <li class="sidebar__item"><a href="system_info.html">System Information</a></li>
-                    <li class="sidebar__item"><a href="../orig_standard.html">UI Kit Template</a></li>
+                    <li class="sidebar__item"><a href="../orig_standard.html">UI Kit Template</a></li> -->
                 </ul>
+                <div id="device_connect_sidebar">
+                    <div class="sidebar__header">
+                        <div id="device_title" class="sidebar__header-title"></div>
+                    </div>
+                    <ul>
+                        <li class="sidebar__item"><a href="nic_profiles.html">Nic Profiles</a></li>
+                        <li class="sidebar__item"><a href="domains.html">Domains</a></li>
+                        <li class="sidebar__item"><a href="uplink_profiles.html">Uplink Profiles</a></li>
+                        <li class="sidebar__item"><a href="system_info.html">System Information</a></li>
+                        <li class="sidebar__item"><a href="../orig_standard.html">UI Kit Template</a></li>
+                    </ul>
+                </div>
             </div>
             <main>
                 <header class="header">
@@ -97,9 +109,17 @@
                             <!-- Add/Delete Buttons will come here -->
                             <button id="add_device" class="btn btn--blue-ghost push-4">Add Device</button>
                             <button id="del_device" class="btn btn--blue-ghost pull-5">Delete Device</button>
-                            <button id="del_device" class="btn btn--blue-ghost pull-5">Connect</button>
+                            <button id="conn_device" class="btn btn--blue-ghost pull-5">Connect</button>
                         </div>
                         
+                        <!-- Connect Device pop-up. Hidden by default -->
+                        <div id="connectDevice_modal" title="Connect to device">
+                            <p>Username: </p><input type="text" id="conn_user" placeholder="Username" required="required"/>
+                            <p>Password: </p><input type="password" id="conn_pass" placeholder="password" required="required" />
+                            <hr>
+                            <button type="submit" id="connectDev_submit" class="btn btn-primary btn-block btn-small">Device Login</button>
+                        </div>
+
                         <!-- Add Device pop-up. Hidden by default -->
                         <div id="addDevice_modal" title="Add a Device">
                             <p>Device Name: </p><input type="text" id="newDevName" placeholder="Device Name" required="required"/>
