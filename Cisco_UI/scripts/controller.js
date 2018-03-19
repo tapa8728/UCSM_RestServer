@@ -50,9 +50,9 @@ $(document).ready(function() {
     // Submitting delete device
     $("#delDev_submit").click(function(e){
         $("#delDevice_modal").dialog("close");
-        newDevName = document.getElementById("newDevName").value;
-        newDevIP = document.getElementById("newDevIP").value;
-        delNewDeviceHandler(newDevName, newDevIP);
+        toDel_dname = localStorage.getItem('del_dname');
+        toDel_dip = localStorage.getItem('del_dip');
+        delDeviceHandler(toDel_dname, toDel_dip);
     });
 
     // cancelling delete device
@@ -70,6 +70,10 @@ function rowClick(row_id){
     var dip = $("#devices_table").find(row_find).find("#dev_ip").html();
     console.log("Dev name : "+dname);
     console.log("Dev IP : "+dip);
+    // add to local storage
+    localStorage.setItem('del_dname', dname);
+    localStorage.setItem('del_dip', dip);
+    console.log("Device to be deleted Stored in local storage : " +localStorage.getItem('del_dname'));
     //isChecked = $("#devices_table").find(row_find).find("#cbox").is(':checked');
     //console.log(row_find + " Is checked - " + isChecked);
     
@@ -189,8 +193,41 @@ function addNewDeviceHandler(devName, devIP){
 // --------------
 // Delete a new Device
 // --------------
-function delNewDeviceHandler(devName, devIP){
-    console.log("[DELETE DEVICE] Begin");
+function delDeviceHandler(d1, d2){
+    console.log("[DELETE DEVICE] Begin :"+d1+","+d2);
+    var json_input = JSON.stringify(
+        [
+            {
+                deviceName: localStorage.getItem('devicename'), //Current device you are logged into. 
+                ipAddress: localStorage.getItem('deviceIP')
+            },
+            {
+                deviceName: localStorage.getItem('del_dname'), //device you want to delete
+                ipAddress: localStorage.getItem('del_dip')
+            }
+        ]);
+    var delDevice = $.ajax({
+        url: "http://localhost:4567/devices/"+d1,
+        type: 'POST', 
+        data: json_input,
+        //contentType: 'application/json', 
+        crossDomain: true,
+        xhrFields : {
+             withCredentials: true
+        },
+        headers :{
+
+        },
+        success: function(data, textStatus, xhr) {
+            console.log("Device Successfully deleted");
+            devicesGetRequest(); // table refresh
+
+        },
+        error: function(data, textStatus, xhr) {
+            console.log("[DELETE DEVICE]Failed Status" + xhr.status);
+        }
+    });
+
 
 }
 
