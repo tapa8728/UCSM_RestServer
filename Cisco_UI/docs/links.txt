@@ -3,3 +3,6 @@ https://devnet.cisco.com/site/uiux/
 
 DropDown Login-
 https://codepen.io/pukey22/pen/yNNrxv
+
+Javascript Modal pop-ups - 
+http://api.jqueryui.com/dialog/#option-dialogClass

@@ -16,7 +16,22 @@ $(document).ready(function() {
         console.log("U : "+ u_input +" P : "+ p_input);
         loginPostRequest(u_input, p_input, devicename);
     });
+
+    // Add a device pop-up
+    $( "#addDevice_modal" ).dialog({ autoOpen: false });
+    $( "#add_device" ).click(function() {
+        console.log("Inside Add Device Modal");
+        $( "#addDevice_modal" ).dialog( "open" );
+    });
+
+    // Add a device pop-up
+    $( "#delDevice_modal" ).dialog({ autoOpen: false });
+    $( "#del_device" ).click(function() {
+        console.log("Inside Delete Device Modal");
+        $( "#delDevice_modal" ).dialog( "open" );
+    });
 });
+
 // --------------
 // Devices 
 // --------------

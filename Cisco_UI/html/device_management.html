@@ -4,10 +4,15 @@
         <meta charset="utf-8">
         <title>Rest Server Dashboard</title>
         <link rel="stylesheet" href="../css/cui-standard.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+          
         <!-- Scripts -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="../scripts/controller.js"></script>
+
         <script type="text/javascript">
             console.log("localStorage"+localStorage);
             devicesGetRequest();
@@ -26,6 +31,7 @@
                     <li class="sidebar__item"><a href="domains.html">Domains</a></li>
                     <li class="sidebar__item"><a href="uplink_profiles.html">Uplink Profiles</a></li>
                     <li class="sidebar__item"><a href="system_info.html">System Information</a></li>
+                    <li class="sidebar__item"><a href="../orig_standard.html">UI Kit Template</a></li>
                 </ul>
             </div>
             <main>
@@ -89,9 +95,23 @@
                         </div>
                         <div class="section">
                             <!-- Add/Delete Buttons will come here -->
-                            <button class="btn btn--blue-ghost push-4">Add Device</button>
-                            <button class="btn btn--blue-ghost pull-5">Delete Device</button>
+                            <button id="add_device" class="btn btn--blue-ghost push-4">Add Device</button>
+                            <button id="del_device" class="btn btn--blue-ghost pull-5">Delete Device</button>
                         </div>
+                        
+                        <!-- Add Device pop-up. Hidden by default -->
+                        <div id="addDevice_modal" title="Add a Device">
+                            <p>Device Name: </p><input type="text" id="newDevName" placeholder="Device Name" required="required"/>
+                            <p>Device IP: </p><input type="text" id="newDevIP" placeholder="Device IP" required="required" />
+                            <button type="submit" id="addDev_submit" class="btn btn-primary btn-block btn-small">Add Device</button>
+                        </div>
+
+                        <div id="delDevice_modal" title="Dialog Title">
+                            <p> Are you sure you want to delete? </p>
+                            <button type="submit" id="delDev_submit" class="btn-small">YES</button>
+                            <button type="submit" id="cancelDelDev_submit" class="btn-small">CANCEL</button>
+                        </div>
+
                     </div>
                 </div>
                 <footer class="footer footer--new">
