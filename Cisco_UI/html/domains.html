@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Rest Server Dashboard</title>
+        <title>Rest Server | Domains</title>
         <link rel="stylesheet" href="../css/cui-standard.min.css">
         <!-- Scripts -->
         <<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -12,7 +12,7 @@
         <script src="../scripts/controller.js"></script>
         <script type="text/javascript">
             console.log("localStorage"+localStorage);
-            domainsGetRequest(localStorage.getItem('devicename'));
+            domainsGetRequest(localStorage.getItem('connected_device'));
         </script>
     </head>
     <body class="cui">
@@ -24,12 +24,24 @@
                 <ul>
                     <li class="sidebar__item"><a href="dashboard.html">Dashboard</a></li>
                     <li class="sidebar__item"><a href="device_management.html">Device Management</a></li>
-                    <li class="sidebar__item"><a href="nic_profiles.html">Nic Profiles</a></li>
+                    <!-- <li class="sidebar__item"><a href="nic_profiles.html">Nic Profiles</a></li>
                     <li class="sidebar__item"><a href="domains.html">Domains</a></li>
                     <li class="sidebar__item"><a href="uplink_profiles.html">Uplink Profiles</a></li>
                     <li class="sidebar__item"><a href="system_info.html">System Information</a></li>
-                    <li class="sidebar__item"><a href="../orig_standard.html">UI Kit Template</a></li>
+                    <li class="sidebar__item"><a href="../orig_standard.html">UI Kit Template</a></li> -->
                 </ul>
+                <div id="device_connect_sidebar">
+                    <div class="sidebar__header">
+                        <div id="device_title" class="sidebar__header-title"></div>
+                    </div>
+                    <ul>
+                        <li class="sidebar__item"><a href="nic_profiles.html">Nic Profiles</a></li>
+                        <li class="sidebar__item"><a href="domains.html">Domains</a></li>
+                        <li class="sidebar__item"><a href="uplink_profiles.html">Uplink Profiles</a></li>
+                        <li class="sidebar__item"><a href="system_info.html">System Information</a></li>
+                        <li class="sidebar__item"><a href="../orig_standard.html">UI Kit Template</a></li>
+                    </ul>
+                </div>
             </div>
             <main>
                 <header class="header">

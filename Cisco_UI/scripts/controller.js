@@ -6,8 +6,8 @@ $(document).ready(function() {
     console.log("Controller activated.");
     $("#dash_button").css('visibility','hidden');
     $('#device_connect_sidebar').css('visibility','hidden');
-
-
+    //localStorage.setItem('isDeviceConnected', false);
+    
     var currdevicename= "";
     var currdeviceIP = "";
     // Login
@@ -44,7 +44,8 @@ $(document).ready(function() {
         pass = document.getElementById("conn_pass").value;
         $("#connectDevice_modal").dialog("close");
         connDevice = localStorage.getItem('sel_dname');
-        connectDeviceHandler(user, pass, connDevice);
+        connIp = localStorage.getItem('sel_dip');
+        connectDeviceHandler(user, pass, connDevice, connIp);
     });
 
     /* --------------------------
@@ -129,7 +130,7 @@ function rowClick(row_id){
 // -------------------
 // Login to a specific Device 
 // -------------------
-function connectDeviceHandler(user, pass, device_name)
+function connectDeviceHandler(user, pass, device_name, device_ip)
 {
     console.log("[connectDeviceHandler] Begin");
     var json_input = JSON.stringify({
@@ -154,6 +155,10 @@ function connectDeviceHandler(user, pass, device_name)
                 // Show all the sidebar options. 
                 $('#device_connect_sidebar').css('visibility','visible');
                 $('#device_title').text(device_name);
+                // re-set the current device context in local storage
+                localStorage.setItem('connected_device', device_name); // use this for all the GET Calls
+                localStorage.setItem('connected_ip', device_ip);
+                localStorage.setItem('isDeviceConnected', true); 
             }
         },
         error: function(data, textStatus, xhr) {
@@ -297,7 +302,6 @@ function delDeviceHandler(d1, d2){
 
 }
 
-
 // --------------
 // Login Page
 // --------------
@@ -384,6 +388,10 @@ function nicProfileGetRequest(devicename){
             console.log("[RESPONSE] Nic Profiles Table Completed");
             // push the data on the table. ?? 
             // $('.nic-result').text(data); 
+            if(localStorage.getItem('isDeviceConnected') == "true"){
+                    $('#device_connect_sidebar').css('visibility','visible');
+                    $('#device_title').text(devicename);
+            }
         },
         error: function(data, textStatus, xhr) {
             console.log("[GET NICPROFILES]Failed Status" + xhr.status);
@@ -460,6 +468,10 @@ function domainsGetRequest(devicename){
                 }
                 
             }
+            if(localStorage.getItem('isDeviceConnected') == "true"){
+                    $('#device_connect_sidebar').css('visibility','visible');
+                    $('#device_title').text(devicename);
+            }
             console.log("[RESPONSE] Domains Table Completed");
             // push the data on the table. ?? 
             //$('.domains-result').text(data); 
@@ -514,6 +526,10 @@ function uplinkProfGetRequest(devicename){
                     "</tr>" 
                 );
                 console.log("uplink profile row appended");
+                if(localStorage.getItem('isDeviceConnected') == "true"){
+                    $('#device_connect_sidebar').css('visibility','visible');
+                    $('#device_title').text(devicename);
+                }
             }
             // push the data on the table. ?? 
             $('.uplinkprof-result').text(data); 
@@ -555,6 +571,10 @@ function sysInfoGetRequest(devicename){
             console.log("[RESPONSE] SystemInformation Table Completed");
             // push the data on the table. ?? 
             //$('.sysinfo-result').text(data); 
+            if(localStorage.getItem('isDeviceConnected') == "true"){
+                $('#device_connect_sidebar').css('visibility','visible');
+                $('#device_title').text(devicename);
+            }
 
         },
         error: function(data, textStatus, xhr) {
@@ -563,7 +583,3 @@ function sysInfoGetRequest(devicename){
     });
 } // end of sysInfoGetRequest function. 
 
-    
-    
-    
-  
